@@ -1,59 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-const writeups = [
-  {
-    title: "JWT Bypass via Algorithm Confusion",
-    img_url: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=600&auto=format&fit=crop",
-    tags: ["PicoCTF 2024", "Web"],
-  },
-  {
-    title: "Heap Grooming in glibc 2.35",
-    img_url: "https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=600&auto=format&fit=crop",
-    tags: ["HackTheBox", "Pwn"],
-  },
-  {
-    title: "Reversing a Custom VM",
-    img_url: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&auto=format&fit=crop",
-    tags: ["DiceCTF", "Reversing"],
-  },
-  {
-    title: "SSRF to Internal AWS Metadata",
-    img_url: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600&auto=format&fit=crop",
-    tags: ["CTF Learn", "Web"],
-  },
-  {
-    title: "Forensics: Recovering a Wiped Drive",
-    img_url: "https://images.unsplash.com/photo-1603732551658-5fabbafa84eb?w=600&auto=format&fit=crop",
-    tags: ["NahamCon", "Forensics"],
-  },
-  {
-    title: "Blind SQL Injection with Time Delays",
-    img_url: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=600&auto=format&fit=crop",
-    tags: ["CTF Learn", "Web"],
-  },
-  {
-    title: "ROP Chain to Bypass NX + ASLR",
-    img_url: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&auto=format&fit=crop",
-    tags: ["HackTheBox", "Pwn"],
-  },
-  {
-    title: "Steganography: Hidden in Plain Sight",
-    img_url: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=600&auto=format&fit=crop",
-    tags: ["PicoCTF 2024", "Forensics"],
-  },
-  {
-    title: "Android APK Reverse Engineering",
-    img_url: "https://images.unsplash.com/photo-1607252650355-f7fd0460ccdb?w=600&auto=format&fit=crop",
-    tags: ["DiceCTF", "Reversing"],
-  },
-  {
-    title: "CSRF Token Bypass via Referrer",
-    img_url: "https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=600&auto=format&fit=crop",
-    tags: ["NahamCon", "Web"],
-  },
-]
-
-const POSTS_PER_PAGE = 5
+const POSTS_PER_PAGE = 6
 
 const tagColors = {
   Web:       "bg-cyan-500/10 text-cyan-400 border border-cyan-500/20",
@@ -70,14 +19,28 @@ const getTagStyle = (tag) => {
 }
 
 const BlogCard = () => {
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1);
+  const [posts, setPosts] = useState([]);
+  const navigate = useNavigate();
 
-  const totalPages = Math.ceil(writeups.length / POSTS_PER_PAGE)
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/posts');
+        setPosts(response.data);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    };
+    fetchPosts();
+  }, []);
 
-  const paginatedPosts = writeups.slice(
+  const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
+
+  const paginatedPosts = posts.slice(
     (currentPage - 1) * POSTS_PER_PAGE,
     currentPage * POSTS_PER_PAGE
-  )
+  );
 
   const goTo = (page) => {
     if (page >= 1 && page <= totalPages) setCurrentPage(page)
@@ -91,13 +54,15 @@ const BlogCard = () => {
 
       {/* Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {paginatedPosts.map((post, index) => (
-          <div
-            key={index}
-            className="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden
-                       hover:border-white/25 hover:-translate-y-1 transition-all duration-300 cursor-pointer"
-          >
-            <div className="overflow-hidden h-44">
+        {paginatedPosts.length > 0 ? (
+          paginatedPosts.map((post) => (
+            <div
+              key={post._id}
+              onClick={() => navigate(`/blog/${post._id}`)}
+              className="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden
+                         hover:border-white/25 hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+            >
+              <div className="overflow-hidden h-44">
               <img
                 src={post.img_url}
                 alt={post.title}
@@ -111,13 +76,18 @@ const BlogCard = () => {
                     {tag}
                   </span>
                 ))}
+                </div>
+                <h3 className="text-sm font-semibold leading-snug text-white/90 group-hover:text-white transition-colors">
+                  {post.title}
+                </h3>
               </div>
-              <h3 className="text-sm font-semibold leading-snug text-white/90 group-hover:text-white transition-colors">
-                {post.title}
-              </h3>
             </div>
+          ))
+        ) : (
+          <div className="col-span-1 sm:col-span-2 lg:col-span-3 text-white/50 py-10 text-center">
+            No posts found.
           </div>
-        ))}
+        )}
       </div>
 
       {/* Pagination */}
@@ -166,7 +136,7 @@ const BlogCard = () => {
 
       {/* Page info */}
       <p className="text-center text-xs text-white/30 mt-3">
-        Page {currentPage} of {totalPages} · {writeups.length} writeups
+        Page {currentPage} of {totalPages || 1} · {posts.length} writeups
       </p>
 
     </div>
