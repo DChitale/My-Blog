@@ -5,5 +5,5 @@ const connectDB = require('./src/db/db');
 connectDB();
 
 app.listen(3000,()=>{
-    console.log("Connected to 3000");
+    console.log("Connected to Backend");
 })

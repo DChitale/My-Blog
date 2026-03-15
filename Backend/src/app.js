@@ -12,7 +12,7 @@ app.set('trust proxy', 1);
 app.use(helmet({ crossOriginResourcePolicy: false }));
 
 // CORS - supports multiple origins via comma-separated FRONTEND_URL env var
-app.use(cors({
+const corsOptions = {
   origin: function (origin, callback) {
     const allowedOrigins = process.env.FRONTEND_URL?.split(',').map(o => o.trim()) || [];
 
@@ -26,10 +26,12 @@ app.use(cors({
     }
   },
   credentials: true,
-}));
+};
 
-// Handle preflight requests for all routes
-app.options('*', cors());
+app.use(cors(corsOptions));
+
+// Handle preflight requests for all routes (Express 5 compatible)
+app.options('/{*any}', cors(corsOptions));
 
 app.use(express.json());
 
