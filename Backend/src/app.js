@@ -6,7 +6,7 @@ require('dotenv').config();
 const app = express();
 
 app.use(helmet({ crossOriginResourcePolicy: false }));
-app.use(cors({ origin: ['http://localhost:5173', process.env.FRONTEND_URL] }));
+app.use(cors({ origin: process.env.FRONTEND_URL }));
 app.use(express.json());
 
 const limiter = rateLimit({

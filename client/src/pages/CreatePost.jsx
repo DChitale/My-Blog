@@ -52,7 +52,7 @@ const CreatePost = () => {
         },
       };
 
-      await axios.post('http://localhost:3000/api/posts', postData, config);
+      await axios.post(`${import.meta.env.VITE_API_URL}/posts`, postData, config);
       navigate('/');
     } catch (err) {
       console.error('Error creating post:', err);
