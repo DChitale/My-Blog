@@ -13,14 +13,14 @@ import rehypeHighlight from 'rehype-highlight';
 import 'highlight.js/styles/github-dark.css';
 
 const Blog = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/posts/${id}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_URL}/posts/slug/${slug}`);
         setPost(response.data);
       } catch (error) {
         console.error('Error fetching post:', error);
@@ -28,21 +28,45 @@ const Blog = () => {
         setLoading(false);
       }
     };
-    if (id) {
+    if (slug) {
       fetchPost();
     } else {
       setLoading(false);
     }
-  }, [id]);
+  }, [slug]);
+
+  useEffect(() => {
+    if (post) {
+      document.title = `${post.title} | HexNotes`;
+      
+      const plainText = post.content.replace(/[#*`~>\[\]]/g, '').replace(/\n/g, ' ').trim();
+      const desc = plainText.length > 150 ? plainText.substring(0, 150) + '...' : plainText;
+      
+      let meta = document.querySelector('meta[name="description"]');
+      if (!meta) {
+        meta = document.createElement('meta');
+        meta.name = 'description';
+        document.head.appendChild(meta);
+      }
+      meta.content = desc;
+    } else {
+      document.title = 'HexNotes';
+      
+      let meta = document.querySelector('meta[name="description"]');
+      if (meta) {
+        meta.content = 'HexNotes - A technical blog about all technical topics';
+      }
+    }
+  }, [post]);
 
   if (loading) return <div className="text-white text-center mt-20">Loading...</div>;
-  if (!post && id) return <div className="text-white text-center mt-20">Post not found</div>;
+  if (!post && slug) return <div className="text-white text-center mt-20">Post not found</div>;
 
   return (
     <div className="min-h-screen text-white">
       <Navbar />
 
-      {id && post ? (
+      {slug && post ? (
         <div className="max-w-4xl mx-auto px-6 py-12">
           <Link to="/" className="text-white/50 hover:text-white mb-8 inline-block transition-colors">
             ← Back to Home

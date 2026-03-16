@@ -49,6 +49,40 @@ app.use('/api/auth', authRoutes);
 const postRoutes = require('./routes/postRoutes');
 app.use('/api/posts', postRoutes);
 
+const Post = require('./models/Post');
+
+app.get('/sitemap.xml', async (req, res) => {
+  try {
+    const posts = await Post.find({}, 'slug updatedAt');
+    
+    let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+    
+    xml += '  <url>\n';
+    xml += '    <loc>https://hexnotes.vercel.app/</loc>\n';
+    xml += '  </url>\n';
+    
+    posts.forEach(post => {
+      if (post.slug) {
+        xml += '  <url>\n';
+        xml += `    <loc>https://hexnotes.vercel.app/blog/${post.slug}</loc>\n`;
+        if (post.updatedAt) {
+          xml += `    <lastmod>${new Date(post.updatedAt).toISOString()}</lastmod>\n`;
+        }
+        xml += '  </url>\n';
+      }
+    });
+    
+    xml += '</urlset>';
+    
+    res.header('Content-Type', 'application/xml');
+    res.send(xml);
+  } catch (error) {
+    console.error('Error generating sitemap:', error);
+    res.status(500).end();
+  }
+});
+
 app.get('/api/test', (req, res) => {
   res.json({ message: 'Hello from MongoDB Backend!' });
 });

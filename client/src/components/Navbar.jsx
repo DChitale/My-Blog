@@ -13,7 +13,7 @@ const Navbar = () => {
         className="cursor-pointer"
       >
         {/* <img src={logo} alt="logo" className="w-32 sm:w-44 " /> */}
-        <h1 className="logo-font text-xl lg:text-3xl">My {'>'} Blog</h1>
+        <h1 className="logo-font text-xl lg:text-3xl">Hex {'>'} Notes</h1>
       </div>
 
      <div>
