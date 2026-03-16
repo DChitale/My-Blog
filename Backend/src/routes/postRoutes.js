@@ -13,6 +13,20 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Get single post by slug
+router.get('/slug/:slug', async (req, res) => {
+  try {
+    const post = await Post.findOne({ slug: req.params.slug });
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+    res.json(post);
+  } catch (error) {
+    console.error('Error getting post:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
 // Get single post by ID
 router.get('/:id', async (req, res) => {
   try {
@@ -40,11 +54,14 @@ router.post('/', authMiddleware, async (req, res) => {
     return res.status(400).json({ message: 'Invalid content' });
   }
   
+  const slug = title.toLowerCase().trim().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, '-');
+
   const post = new Post({
     title,
     content,
     img_url,
-    tags
+    tags,
+    slug
   });
 
   try {

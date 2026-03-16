@@ -58,7 +58,7 @@ const BlogCard = () => {
           paginatedPosts.map((post) => (
             <div
               key={post._id}
-              onClick={() => navigate(`/blog/${post._id}`)}
+              onClick={() => navigate(`/blog/${post.slug || post._id}`)}
               className="group bg-white/5 border border-white/10 rounded-2xl overflow-hidden
                          hover:border-white/25 hover:-translate-y-1 transition-all duration-300 cursor-pointer"
             >
