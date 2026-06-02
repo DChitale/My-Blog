@@ -58,6 +58,21 @@ const Blog = () => {
         document.head.appendChild(meta);
       }
       meta.content = desc;
+
+      // Clean up noindex if valid post is present
+      const robotsMeta = document.querySelector('meta[name="robots"]');
+      if (robotsMeta) {
+        robotsMeta.remove();
+      }
+    } else if (!loading && slug && !post) {
+      document.title = '404: Post Not Found | HexNotes';
+      let robotsMeta = document.querySelector('meta[name="robots"]');
+      if (!robotsMeta) {
+        robotsMeta = document.createElement('meta');
+        robotsMeta.name = 'robots';
+        robotsMeta.content = 'noindex';
+        document.head.appendChild(robotsMeta);
+      }
     } else {
       document.title = 'HexNotes | Awesome Tech Hacks, Android, Windows & Linux Tweaks';
       
@@ -65,11 +80,40 @@ const Blog = () => {
       if (meta) {
         meta.content = 'Discover awesome tech hacks, system optimizations, customization tricks, and powerful workarounds across Android, Windows, and Linux.';
       }
+
+      // Clean up noindex
+      const robotsMeta = document.querySelector('meta[name="robots"]');
+      if (robotsMeta) {
+        robotsMeta.remove();
+      }
     }
-  }, [post]);
+
+    return () => {
+      // Cleanup on unmount
+      const robotsMeta = document.querySelector('meta[name="robots"]');
+      if (robotsMeta) {
+        robotsMeta.remove();
+      }
+    };
+  }, [post, loading, slug]);
 
   if (loading) return <div className="text-text-main text-center mt-20">Loading...</div>;
-  if (!post && slug) return <div className="text-text-main text-center mt-20">Post not found</div>;
+  if (!post && slug) return (
+    <div className="min-h-screen text-text-main bg-bg-main flex flex-col">
+      <Navbar />
+      <main className="flex-grow flex flex-col items-center justify-center gap-6 py-20 px-6">
+        <h1 className="text-6xl font-black text-orange-500">404</h1>
+        <h2 className="text-2xl font-bold tracking-tight">Post Not Found</h2>
+        <p className="text-text-sub text-sm max-w-sm text-center leading-relaxed">
+          The article you are looking for does not exist or has been moved to a new URL.
+        </p>
+        <Link to="/" className="mt-4 px-6 py-3 rounded-full border border-border-main bg-bg-card hover:bg-bg-main text-xs font-bold tracking-wider uppercase transition-all shadow-xs">
+          ← Back to Articles
+        </Link>
+      </main>
+      <Footer />
+    </div>
+  );
 
   return (
     <div className="min-h-screen text-text-main bg-bg-main flex flex-col">
