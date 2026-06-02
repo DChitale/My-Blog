@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Blog from './pages/Blog';
-import CreatePost from './pages/CreatePost';
-import Login from './pages/Login';
+import About from './pages/About';
 import axios from 'axios';
 
 const App = () => {
@@ -18,8 +17,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<Blog />} />
-        <Route path="/create" element={<CreatePost />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </div>
   );

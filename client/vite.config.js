@@ -25,8 +25,7 @@ export default defineConfig(async ({ mode }) => {
         hostname: 'https://hexnotes.vercel.app',
         dynamicRoutes: [
           '/blog',
-          '/create',
-          '/login',
+          '/about',
           ...dynamicRoutes
         ]
       })

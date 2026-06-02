@@ -2,10 +2,25 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
 
-// Get all posts
+// Get all posts (with optional search and tag filters)
 router.get('/', async (req, res) => {
   try {
-    const posts = await Post.find().sort({ createdAt: -1 });
+    const { search, tag } = req.query;
+    let query = {};
+
+    if (tag && tag !== 'All') {
+      query.tags = { $regex: new RegExp(`^${tag}$`, 'i') };
+    }
+
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: 'i' } },
+        { content: { $regex: search, $options: 'i' } },
+        { tags: { $regex: search, $options: 'i' } }
+      ];
+    }
+
+    const posts = await Post.find(query).sort({ createdAt: -1 });
     res.json(posts);
   } catch (error) {
     console.error('Error getting posts:', error);
