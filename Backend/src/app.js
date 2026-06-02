@@ -61,6 +61,9 @@ app.get('/sitemap.xml', async (req, res) => {
     xml += '  <url>\n';
     xml += '    <loc>https://hexnotes.vercel.app/</loc>\n';
     xml += '  </url>\n';
+    xml += '  <url>\n';
+    xml += '    <loc>https://hexnotes.vercel.app/about</loc>\n';
+    xml += '  </url>\n';
     
     posts.forEach(post => {
       if (post.slug) {
@@ -83,8 +86,5 @@ app.get('/sitemap.xml', async (req, res) => {
   }
 });
 
-app.get('/api/test', (req, res) => {
-  res.json({ message: 'Hello from MongoDB Backend!' });
-});
 
 module.exports = app;

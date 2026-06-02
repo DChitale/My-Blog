@@ -1,11 +1,75 @@
-@import url("https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Outfit:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap");
 @import "tailwindcss";
+
+@theme {
+  --color-bg-main: var(--background);
+  --color-text-main: var(--text-primary);
+  --color-text-sub: var(--text-secondary);
+  --color-text-muted: var(--text-tertiary);
+  --color-border-main: var(--border-color);
+  --color-bg-card: var(--card-bg);
+  --color-border-hover: var(--card-hover-border);
+  --color-accent-main: var(--accent-color);
+}
+
+:root {
+  --background: #14120B;
+  --text-primary: #f4f4f5; /* zinc-100 */
+  --text-secondary: #a1a1aa; /* zinc-400 */
+  --text-tertiary: #71717a; /* zinc-500 */
+  --border-color: #27272a; /* zinc-800 */
+  --card-bg: #14120B;
+  --card-hover-border: #3f3f46; /* zinc-700 */
+  --accent-color: #f54e00;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: #fbfbfb; /* soft grey-white */
+    --text-primary: #09090b; /* zinc-950 */
+    --text-secondary: #52525b; /* zinc-600 */
+    --text-tertiary: #71717a; /* zinc-500 */
+    --border-color: #e4e4e7; /* zinc-200 */
+    --card-bg: #ffffff; /* solid white card */
+    --card-hover-border: #d4d4d8; /* zinc-300 */
+    --accent-color: #f54e00;
+  }
+}
+
+/* Explicit class-based overrides */
+html.dark {
+  --background: #14120B;
+  --text-primary: #f4f4f5;
+  --text-secondary: #a1a1aa;
+  --text-tertiary: #71717a;
+  --border-color: #27272a;
+  --card-bg: #1B1913;
+  --card-hover-border: #3f3f46;
+  --accent-color: #f54e00;
+}
+
+html.light {
+  --background: #fbfbfb;
+  --text-primary: #09090b;
+  --text-secondary: #52525b;
+  --text-tertiary: #71717a;
+  --border-color: #e4e4e7;
+  --card-bg: #ffffff;
+  --card-hover-border: #d4d4d8;
+  --accent-color: #f54e00;
+}
+
+/* Enable dark: variant activation via .dark class in Tailwind v4 */
+@variant dark (&:where(.dark, .dark *));
+
 html,
 body {
   padding: 0;
- font-family: "Outfit", sans-serif;
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif;
   margin: 0;
-  background-color: #111;
+  background-color: var(--background);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 @font-face {
@@ -19,4 +83,9 @@ body {
 
 .logo-font{
   font-family: 'CyberJunky';
+}
+
+.text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--text-primary);
 }
