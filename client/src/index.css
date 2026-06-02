@@ -13,7 +13,7 @@
 }
 
 :root {
-  --background: #14120B;
+  --background: #111;
   --text-primary: #f4f4f5; /* zinc-100 */
   --text-secondary: #a1a1aa; /* zinc-400 */
   --text-tertiary: #71717a; /* zinc-500 */
@@ -38,12 +38,12 @@
 
 /* Explicit class-based overrides */
 html.dark {
-  --background: #14120B;
+  --background: #111;
   --text-primary: #f4f4f5;
   --text-secondary: #a1a1aa;
   --text-tertiary: #71717a;
   --border-color: #27272a;
-  --card-bg: #1B1913;
+  --card-bg: #1b1b1b;
   --card-hover-border: #3f3f46;
   --accent-color: #f54e00;
 }

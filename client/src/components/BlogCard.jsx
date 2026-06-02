@@ -110,7 +110,7 @@ const BlogCard = () => {
       
       {/* Title & Section details */}
       <div className="flex flex-col gap-2 mb-10">
-        <h2 className="text-3xl font-extrabold tracking-tight text-text-main">All Articles</h2>
+        <h2 className="text-3xl font-extrabold text-text-main">All Articles</h2>
         <p className="text-sm text-text-sub max-w-xl leading-relaxed">
           Find technical articles, step-by-step coding tutorials and awesome tech-hacks
         </p>
@@ -235,6 +235,7 @@ const BlogCard = () => {
                     src={post.img_url}
                     alt={post.title}
                     className="w-full h-full object-cover transition-transform duration-500"
+                    loading="lazy"
                   />
                 ) : (
                   <span className="text-text-muted text-xs">No cover image</span>

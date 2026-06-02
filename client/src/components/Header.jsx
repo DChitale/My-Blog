@@ -11,7 +11,7 @@ const Header = () => {
        
 
         {/* Large Title (reverted to old style, uppercase all) */}
-        <h1 className="text-4xl sm:text-6xl font-black tracking- text-text-main leading-tight sm:leading-none max-w-2xl">
+        <h1 className="text-4xl sm:text-6xl font-black tracking-tight text-text-main leading-tight sm:leading-none max-w-2xl">
           Tech Insights & Hacks
         </h1>
 
