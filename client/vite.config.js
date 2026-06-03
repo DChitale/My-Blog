@@ -30,5 +30,15 @@ export default defineConfig(async ({ mode }) => {
         ]
       })
     ],
+    build: {
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+            'vendor-utils': ['axios', 'lucide-react'],
+          }
+        }
+      }
+    },
   }
 })

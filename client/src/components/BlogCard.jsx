@@ -143,7 +143,7 @@ const BlogCard = () => {
             onClick={() => { setSelectedTag('All'); setVisibleCount(6); }}
             className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold border transition-all shrink-0 cursor-pointer ${
               selectedTag === 'All'
-                ? "bg-orange-500/10 text-orange-500 border-orange-500/35"
+                ? "bg-accent-main/10 text-accent-main border-accent-main/35"
                 : "bg-bg-card border-border-main text-text-sub hover:border-border-hover hover:text-text-main"
             }`}
           >
@@ -155,7 +155,7 @@ const BlogCard = () => {
             onClick={() => { setSelectedTag('Recent'); setVisibleCount(6); }}
             className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold border transition-all shrink-0 cursor-pointer ${
               selectedTag === 'Recent'
-                ? "bg-orange-500/10 text-orange-500 border-orange-500/35"
+                ? "bg-accent-main/10 text-accent-main border-accent-main/35"
                 : "bg-bg-card border-border-main text-text-sub hover:border-border-hover hover:text-text-main"
             }`}
           >
@@ -171,7 +171,7 @@ const BlogCard = () => {
                 onClick={() => { setSelectedTag(tag); setVisibleCount(6); }}
                 className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold border transition-all shrink-0 cursor-pointer ${
                   isSelected
-                    ? "bg-orange-500/10 text-orange-500 border-orange-500/35"
+                    ? "bg-accent-main/10 text-accent-main border-accent-main/35"
                     : "bg-bg-card border-border-main text-text-sub hover:border-border-hover hover:text-text-main"
                 }`}
               >
@@ -188,7 +188,7 @@ const BlogCard = () => {
                 onClick={() => setShowMoreTags(!showMoreTags)}
                 className={`flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold border transition-all shrink-0 cursor-pointer ${
                   overflowTags.includes(selectedTag)
-                    ? "bg-orange-500/10 text-orange-500 border-orange-500/35"
+                    ? "bg-accent-main/10 text-accent-main border-accent-main/35"
                     : "bg-bg-card border-border-main text-text-sub hover:border-border-hover hover:text-text-main"
                 }`}
               >
@@ -202,7 +202,7 @@ const BlogCard = () => {
                       onClick={() => { setSelectedTag(tag); setVisibleCount(6); setShowMoreTags(false); }}
                       className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-all cursor-pointer ${
                         selectedTag === tag
-                          ? "text-orange-500 bg-orange-500/10"
+                          ? "text-accent-main bg-accent-main/10"
                           : "text-text-sub hover:bg-bg-main hover:text-text-main"
                       }`}
                     >

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap");
+/* Google Fonts are loaded via <link> in index.html to avoid render-blocking @import */
 @import "tailwindcss";
 
 @theme {
@@ -16,11 +16,11 @@
   --background: #111;
   --text-primary: #f4f4f5; /* zinc-100 */
   --text-secondary: #a1a1aa; /* zinc-400 */
-  --text-tertiary: #71717a; /* zinc-500 */
+  --text-tertiary: #8b8b93; /* bumped from #71717a for WCAG AA 4.5:1 on #111 */
   --border-color: #27272a; /* zinc-800 */
   --card-bg: #14120B;
   --card-hover-border: #3f3f46; /* zinc-700 */
-  --accent-color: #f54e00;
+  --accent-color: #ff6b2b; /* bumped from #f54e00 for WCAG AA contrast on dark bg */
 }
 
 @media (prefers-color-scheme: light) {
@@ -28,11 +28,11 @@
     --background: #fbfbfb; /* soft grey-white */
     --text-primary: #09090b; /* zinc-950 */
     --text-secondary: #52525b; /* zinc-600 */
-    --text-tertiary: #71717a; /* zinc-500 */
+    --text-tertiary: #636369; /* bumped from #71717a for WCAG AA 4.5:1 on #fbfbfb */
     --border-color: #e4e4e7; /* zinc-200 */
     --card-bg: #ffffff; /* solid white card */
     --card-hover-border: #d4d4d8; /* zinc-300 */
-    --accent-color: #f54e00;
+    --accent-color: #d94400; /* bumped from #f54e00 for WCAG AA contrast on light bg */
   }
 }
 
@@ -41,22 +41,22 @@ html.dark {
   --background: #111;
   --text-primary: #f4f4f5;
   --text-secondary: #a1a1aa;
-  --text-tertiary: #71717a;
+  --text-tertiary: #8b8b93; /* WCAG AA fix */
   --border-color: #27272a;
   --card-bg: #1b1b1b;
   --card-hover-border: #3f3f46;
-  --accent-color: #f54e00;
+  --accent-color: #ff6b2b; /* WCAG AA fix */
 }
 
 html.light {
   --background: #fbfbfb;
   --text-primary: #09090b;
   --text-secondary: #52525b;
-  --text-tertiary: #71717a;
+  --text-tertiary: #636369; /* WCAG AA fix */
   --border-color: #e4e4e7;
   --card-bg: #ffffff;
   --card-hover-border: #d4d4d8;
-  --accent-color: #f54e00;
+  --accent-color: #d94400; /* WCAG AA fix */
 }
 
 /* Enable dark: variant activation via .dark class in Tailwind v4 */

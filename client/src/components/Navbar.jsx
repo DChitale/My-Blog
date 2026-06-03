@@ -62,6 +62,7 @@ const Navbar = () => {
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="p-1 rounded-lg text-text-sub hover:text-text-main hover:bg-bg-card transition-all cursor-pointer"
+            aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
           >
             {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -84,6 +85,7 @@ const Navbar = () => {
               <button 
                 onClick={toggleTheme}
                 className="p-2 rounded-full border border-border-main bg-bg-main text-text-sub hover:text-text-main transition-all cursor-pointer"
+                aria-label="Toggle Theme"
               >
                 {theme === 'dark' ? <Sun size={15} /> : <Moon size={15} />}
               </button>
